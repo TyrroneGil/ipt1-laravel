@@ -1,8 +1,14 @@
 @extends('layout')
 
 @section('content')
+<style>
+	td,th,tr{
+		border:solid 1px;
+	}
+	</style>
 <center>
  <table class ='table table-striped'>
+	<tbody>
 	<tr>
 		<th>ID</th>
 		<th>Product Name</th>
@@ -24,7 +30,7 @@
 			<td><a href="/product/{{$product->id}}">View Details</td>
 		</tr>
 	@endforeach
-
+</tbody>
 	 </table>
     
 <center>
