@@ -9,7 +9,7 @@
 		<th>Description</th>	
 		<th>Unit Price</th>
 		<th>Unit</th>
-		<th>View Details</th>
+		<th>View Detail</th>
 		
 	</tr>
 	
