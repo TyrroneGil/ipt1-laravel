@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Product;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,17 +14,8 @@ use App\Models\Product;
 |
 */
 
-Route::get('/', function () {
-    return view('products',[
-        'products'=> Product::all()
-			
-       
-    ]
-    );
-});
-Route::get('/product/{product}',function(Product $product){
-    return view('product',[
-        'product'=>$product
-    ]);
-});
+Route::get('/', [ProductController::class, 'index']);
+Route::get('/product/{product}',[ProductController::class, 'show']);
+Route::get('/create',[ProductController::class, 'create']);
+Route::post('/product', [ProductController::class, 'store']);
 ?>

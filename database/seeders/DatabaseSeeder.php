@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
@@ -22,21 +21,23 @@ class DatabaseSeeder extends Seeder
 
             Product::create([
                 'name' => 'Chicken',
-                'description'=>'Fat Chicken',
+                
                 'unitPrice'=>23.21,
-                'unit'=>'kg'
+                'unit'=>'kg',
+                'category'=>'meat'
             ]);
             Product::create([
                 'name' => 'Pork',
-                'description'=>'Fat Pork',
                 'unitPrice'=>23.0222,
-                'unit'=>'kg'
+                'unit'=>'kg',
+                'category'=>'meat'
             ]);
             Product::create([
                 'name' => 'Beef',
-                'description'=>'Fat Beef',
+               
                 'unitPrice'=>23.01112,
-                'unit'=>'kg'
+                'unit'=>'kg',
+                'category'=>'meat'
             ]);
     }
 }
