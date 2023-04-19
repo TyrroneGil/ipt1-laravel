@@ -7,7 +7,7 @@
 	}
 	</style>
 <center>
- <table class ='table table-striped'>
+ <table class ='table table-dark '>
 
 	<tr>
 		<th>ID</th>
@@ -29,7 +29,7 @@
 			<td>{{$product['unitPrice']}}</td>
 			<td>{{$product['unit']}}</td>
 			<td>{{$product['category']}}</td>
-			<td><a href="/product/{{$product->id}}">View Details</td>
+			<td><a href="/product/{{$product->id}}"> <button class="btn btn-primary">View Details</button></td>
 		</tr>
 
 	@endforeach
@@ -38,6 +38,6 @@
 	 <nav>
 		{{$products->links()}}
 	 </nav>
-	 <button class="btn-primary"><a href="create">View Form</a></button>
+	 <a href="create"> <button class="btn btn-primary">View Form</button></a>
 <center>
 	@endsection
