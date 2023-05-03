@@ -41,4 +41,29 @@ class ProductController extends Controller
        
    
    }
+   public function edit(Product $product){
+    return view('product.edit',[
+        'product'=>$product
+    ]);
+    
+    
+}
+public function update(Product $product,Request $request){
+    $formFields = $request->validate([
+        'name'=>'required',
+        'unit'=>'required',
+        'category'=>'required',
+        'unitPrice'=>'required',
+       
+    ]);
+    $product->update($formFields);
+			
+    return redirect('/')->with('success','New product updated');
+       
+   
+   }
+public function destroy(Product $product){
+    $product->delete();
+    return redirect('/')->with('success','New product deleted');
+}
 }
