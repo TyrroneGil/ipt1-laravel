@@ -9,4 +9,12 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = ['name', 'unit', 'unitPrice', 'category','image_url','description'];
+
+    public function scopeFilter($query,array $filters){
+        if($filters['search'] ?? false){
+            $query->where('name','like','%'.$filters['search'].'%')
+            ->orWhere('category','like','%'.$filters['search'].'%')
+            ->orWhere('description','like','%'.$filters['search'].'%');
+        }
+    }
 }

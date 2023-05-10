@@ -8,7 +8,7 @@ class ProductController extends Controller
 {
    public function index(){
     return view('product.products',[
-        'products'=> Product::paginate(5)
+        'products'=> Product::latest()->filter(request(['search']))->simplePaginate(5)
 			
        
     ]);
@@ -70,11 +70,5 @@ public function destroy(Product $product){
     return redirect('/')->with('success','New product deleted');
 }
 
-public function scopeFilter($query,array $filters){
-    if($filters['search'] ?? false){
-        $query->where('name','like','%'.$filters['search'].'%')
-        ->orWhere('category','like','%'.$filters['search'].'%')
-        ->orWhere('description','like','%'.$filters['search'].'%');
-    }
-}
+
 }

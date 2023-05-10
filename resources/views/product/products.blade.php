@@ -1,7 +1,7 @@
 <x-layout>
 	<h1>Product Catalogue</h1>
 	
-		<form action="">
+		<form>
 			<div class="input-group">
 	<input type="text" name="search" class="form-control">
 	<button class="btn btn-primary" type="submit">Search</button>
@@ -10,12 +10,9 @@
 	@if(session()->has('success'))
 	<x-notify type="success" title="Success" content="{{session('success')}}"/>
 	@endif
-
- 
+ @unless($products->isEmpty())
 <div class="row">
-			
-		
-	@foreach($products as $product)
+			@foreach($products as $product)
 	<div class="col-4">
 		<div class="card h-100 shadow-sm">
 			<img src="{{$product->image_url ? asset('storage/'.$product->image_url):asset('/images/iconhome.png')}}" class="card-img-top">
@@ -40,11 +37,16 @@
 
 
 	@endforeach
+	@else
+	<div class="row">
+		<h3>No Products Found</h3>
+	</div>
+	@endunless
 </div>
 </div>
 	 <nav>
 		{{$products->links()}}
 	 </nav>
-	 <a href="create"> <button class="btn btn-primary">View Form</button></a>
+	 
 
 </x-layout>

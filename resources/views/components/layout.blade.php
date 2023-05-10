@@ -24,6 +24,33 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="create">Create New Product</a>
         </li>
+      </ul>
+
+      <ul class="navbar-nav">
+       @auth
+       <li class="nav-item">
+          <a  class="nav-link">Welcome {{auth()->user()->name}}</a>
+        </li>
+      <form method="POST" action="/logoutsss">
+        @csrf
+        <li class="nav-item">
+          <button type="submit"><a>Logout</a></button>
+        </li>
+      </form>
+       @else
+       <li class="nav-item">
+          <a href="/register" class="nav-link">Register</a>
+        </li>
+        <li class="nav-item">
+          <a href="/login" class="nav-link">Login</a>
+        </li>
+
+
+       @endauth
+      </ul>
+
+    </div>
+  </div>
 </nav>
   <div class="container">
     
