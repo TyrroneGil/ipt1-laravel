@@ -33,7 +33,7 @@
 <div class="row mb-3">
 <label for="category">Category:</label>
 <div class="col-sm-10">
-    <select name="category" class="col-form-control">
+    <select name="category" class="form-control">
     <option {{$product->category == "vegetable" ? "selected" : ""}} value="vegetable">Vegetable</option>
     <option {{$product->category == "meat" ? "selected" : ""}} value="meat">Meat</option>
     <option {{$product->category == "fish" ? "selected" : ""}} value="fish">Fish</option>

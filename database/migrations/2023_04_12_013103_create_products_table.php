@@ -18,6 +18,8 @@ return new class extends Migration
             $table->decimal('unitPrice');
             $table->string('unit');
             $table->string('category');
+            $table->text('image_url')->nullable();
+            $table->text('description')->nullable();
          
         });
     }

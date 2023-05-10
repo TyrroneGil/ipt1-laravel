@@ -35,6 +35,9 @@ class ProductController extends Controller
         'unitPrice'=>'required',
        
     ]);
+    if($request->hasFile('image_url')){
+        $formFields['image_url']=$request->file('image_url')->store('images','public');
+        }
     Product::create($formFields);
 			
     return redirect('/')->with('success','New product save');
@@ -65,5 +68,13 @@ public function update(Product $product,Request $request){
 public function destroy(Product $product){
     $product->delete();
     return redirect('/')->with('success','New product deleted');
+}
+
+public function scopeFilter($query,array $filters){
+    if($filters['search'] ?? false){
+        $query->where('name','like','%'.$filters['search'].'%')
+        ->orWhere('category','like','%'.$filters['search'].'%')
+        ->orWhere('description','like','%'.$filters['search'].'%');
+    }
 }
 }

@@ -1,6 +1,6 @@
 <x-layout>
 
-<form method="POST" action="/product">
+<form method="POST" action="/product" enctype="multipart/form-data">
 @csrf
 <div class="row mb-3">
 <label for="name" class="col-sm-2 col-form-label">Product Name:</label>
@@ -41,6 +41,10 @@ class="form-control @error('unitPrice') is-invalid @enderror"/>
     <option value="fish">Fish</option>
     </select>
 </div>
+</div>
+<div class="row mb-3">
+    <label for="image_url">Image</label>
+    <input type="file" name="image_url" class="form-control">
 </div>
 <button class="btn btn-primary">Save</button>
 </form>

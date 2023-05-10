@@ -1,59 +1,47 @@
 <x-layout>
 	<h1>Product Catalogue</h1>
+	
+		<form action="">
+			<div class="input-group">
+	<input type="text" name="search" class="form-control">
+	<button class="btn btn-primary" type="submit">Search</button>
+	</form>
+	</div>
 	@if(session()->has('success'))
 	<x-notify type="success" title="Success" content="{{session('success')}}"/>
 	@endif
 
- <table class ='table table-dark '>
-
-	<tr>
-		<th>ID</th>
-		<th>Product Name</th>
+ 
+<div class="row">
 			
-		<th>Unit Price</th>
-		<th>Unit</th>
-		<th>Category</th>
-		<th>View Detail</th>
 		
-	</tr>
-	
-
 	@foreach($products as $product)
-		<tr>
-			<td>{{$product['id']}}</td>
-			<td>{{$product['name']}}</td>
-			
-			<td>{{$product['unitPrice']}}</td>
-			<td>{{$product['unit']}}</td>
-			<td>{{$product['category']}}</td>
-			<td>
+	<div class="col-4">
+		<div class="card h-100 shadow-sm">
+			<img src="{{$product->image_url ? asset('storage/'.$product->image_url):asset('/images/iconhome.png')}}" class="card-img-top">
+			<div class="card-body">
+				<center>
 				<div class="row">
-					<div class="col-2">
-						<a href="/product/{{$product->id}}"> <button class="btn btn-primary"><i class="bi-eye"></i></button></a>
+					<div class="col-6">
+						<h5>{{$product->name}}</h5>
 					</div>
-					<div class="col-2">
-						<a href="/product/{{$product->id}}/edit"> <button class="btn btn-primary"><i class="bi-pencil"></i></button></a>
-					</div>
-					<div class="col-2">
-						<form method="POST" action="/products/{{$product->id}}/delete">
-						@csrf
-						@method('DELETE')
-							<button class="btn btn-primary" type="submit">
-								<i class="bi-trash"></i>
-							</button>
-				</form>
-			
+					<div class="col-6">
+						<h5>{{$product->unitPrice}}/{{$product->unit}}</h5>
 					</div>
 				</div>
-				
-				
-				
-		    </td>
-		</tr>
+				</center>
+				<div class="text-center">
+					<a href="#" class="btn btn-info">Add to Cart</a>
+				</div>
+			</div>
+		
+			</div>
+		</div>
+
 
 	@endforeach
-
-	 </table>
+</div>
+</div>
 	 <nav>
 		{{$products->links()}}
 	 </nav>
