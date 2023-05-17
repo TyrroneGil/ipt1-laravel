@@ -25,6 +25,12 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="create">Create New Product</a>
         </li>
+         <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/index2">Manage Product</a>
+        </li>
+        <li>
+            <a class="nav-link active" aria-current="page" href="/cart">Shopping Cart</a>
+        </li>
       </ul>
       @else
 

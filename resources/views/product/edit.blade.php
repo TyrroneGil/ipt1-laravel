@@ -1,6 +1,6 @@
 <x-layout>
 <h1>Product Update | {{$product->name}}</h1>
-<form method="POST" action="/products/{{$product->id}}">
+<form method="POST" action="/products/{{$product->id}}"enctype="multipart/form-data">
 @csrf
 @method('PUT')
 <div class="row mb-3">
@@ -39,6 +39,10 @@
     <option {{$product->category == "fish" ? "selected" : ""}} value="fish">Fish</option>
     </select>
 </div>
+</div>
+<div class="row mb-3">
+    <label for="image_url">Image</label>
+    <input value="{{$product['image_url']}}"type="file" name="image_url" class="form-control">
 </div>
 <button class="btn btn-primary">Save</button>
 </form>

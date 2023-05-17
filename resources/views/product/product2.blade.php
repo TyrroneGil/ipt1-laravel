@@ -1,0 +1,52 @@
+<x-layout>
+	<h1>Product Catalogue</h1>
+	
+		<form>
+			<div class="input-group">
+	<input type="text" name="search" class="form-control">
+	<button class="btn btn-primary" type="submit">Search</button>
+	</form>
+	</div>
+	@if(session()->has('success'))
+	<x-notify type="success" title="Success" content="{{session('success')}}"/>
+	@endif
+ @unless($products->isEmpty())
+<div class="row">
+			@foreach($products as $product)
+	<div class="col-4">
+		<div class="card h-100 shadow-sm">
+			<img src="{{$product->image_url ? asset('storage/'.$product->image_url):asset('/images/iconhome.png')}}" class="card-img-top">
+			<div class="card-body">
+				<center>
+				<div class="row">
+					<div class="col-6">
+						<h5>{{$product->name}}</h5>
+					</div>
+					<div class="col-6">
+						<h5>{{$product->unitPrice}}/{{$product->unit}}</h5>
+					</div>
+				</div>
+				</center>
+				<div class="text-center">
+					<a href="/products/{{$product['id']}}" class="btn btn-info">Add to Cart</a>
+				</div>
+			</div>
+		
+			</div>
+		</div>
+
+
+	@endforeach
+	@else
+	<div class="row">
+		<h3>No Products Found</h3>
+	</div>
+	@endunless
+</div>
+</div>
+	 <nav>
+		{{$products->links()}}
+	 </nav>
+	 
+
+</x-layout>

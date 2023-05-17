@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 //index
 Route::get('/', [ProductController::class, 'index']);
+Route::get('/index2', [ProductController::class, 'index2']);
 
 //show individual data
 Route::get('/product/{product}',[ProductController::class, 'show']);
@@ -43,11 +44,14 @@ Route::put('/products/{product}', [ProductController::class,'update']);
 Route::get('/register',[UserController::class,'create']);
 
 Route::post('/users', [UserController::class, 'store']);
-
+    
 Route::post('/logoutsss', [UserController::class, 'logout']);
 
 Route::get('/login', [UserController::class, 'login']);
 
 Route::post('/authenticate', [UserController::class, 'authenticate']);
 
+Route::get('/products/{id}', [ProductController::class, 'addProducttoCart']);
+
+Route::get('/cart', [ProductController::class, 'ProductCart']);
 ?>

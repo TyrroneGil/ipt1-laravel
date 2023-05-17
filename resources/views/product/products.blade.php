@@ -11,32 +11,44 @@
 	<x-notify type="success" title="Success" content="{{session('success')}}"/>
 	@endif
  @unless($products->isEmpty())
-<div class="row">
+<table class="table table-dark">
+	<tr>
+		<th>Name</th>
+		<th>Unit</th>
+		<th>UnitPrice</th>
+		<th>Category</th>
+		<th>Action</th>
+	</tr>
 			@foreach($products as $product)
-	<div class="col-4">
-		<div class="card h-100 shadow-sm">
-			<img src="{{$product->image_url ? asset('storage/'.$product->image_url):asset('/images/iconhome.png')}}" class="card-img-top">
-			<div class="card-body">
-				<center>
-				<div class="row">
-					<div class="col-6">
-						<h5>{{$product->name}}</h5>
-					</div>
-					<div class="col-6">
-						<h5>{{$product->unitPrice}}/{{$product->unit}}</h5>
-					</div>
+	<tr>
+		<td>{{$product['name']}}</td>
+		<td>{{$product['unit']}}</td>
+		<td>{{$product['unitPrice']}}</td>
+		<td>{{$product['category']}}</td>
+		<td>
+			<div class="row">
+				<div class="col-4">
+					<a href="/product/{{$product['id']}}"><button class="btn btn-primary"><i class="bi bi-eye"></i></button></a>
 				</div>
-				</center>
-				<div class="text-center">
-					<a href="#" class="btn btn-info">Add to Cart</a>
+				<div class="col-4">
+					<a href="/product/{{$product['id']}}/edit"><button class="btn btn-primary"><i class="bi bi-pencil"></i></button></a>
 				</div>
+				<div class="col-4">
+					<form method="POST"action="/products/{{$product['id']}}/delete">
+						@csrf
+						@method('DELETE')
+						<button class="btn btn-primary" type submit><i class="bi bi-trash"></i></button>
+					</form>
+				</div>
+				
 			</div>
-		
-			</div>
-		</div>
+		</td>
+	</tr>
+
 
 
 	@endforeach
+</table>
 	@else
 	<div class="row">
 		<h3>No Products Found</h3>
