@@ -14,7 +14,7 @@
 <div class="row">
 			@foreach($products as $product)
 	<div class="col-4">
-		<div class="card h-100 shadow-sm">
+		<div class="card h-100 shadow-sm my-2">
 			<img src="{{$product->image_url ? asset('storage/'.$product->image_url):asset('/images/iconhome.png')}}" class="card-img-top">
 			<div class="card-body">
 				<center>
@@ -28,7 +28,15 @@
 				</div>
 				</center>
 				<div class="text-center">
-					<a href="/products/{{$product['id']}}" class="btn btn-info">Add to Cart</a>
+					<form action="/cart/{{$product['id']}}">
+						<input type="hidden" name="name" value="{{$product['name']}}">
+						<input type="hidden" name="unit" value="{{$product['unit']}}">
+						<input type="hidden" name="unitPrice" value="{{$product['unitPrice']}}">
+						<input type="hidden" name="category" value="{{$product['category']}}">
+						<input type="hidden" name="image_url" value="{{$product['image_url']}}">
+						<button type="submit" class="btn btn-info">Add to Cart</button>
+					</form>
+					
 				</div>
 			</div>
 		

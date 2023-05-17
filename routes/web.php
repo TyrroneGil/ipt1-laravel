@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -50,8 +51,10 @@ Route::post('/logoutsss', [UserController::class, 'logout']);
 Route::get('/login', [UserController::class, 'login']);
 
 Route::post('/authenticate', [UserController::class, 'authenticate']);
+Route::get('/cart', [CartController::class, 'shoppingCart']);
 
-Route::get('/products/{id}', [ProductController::class, 'addProducttoCart']);
+Route::delete('/cart/{product}/remove',[CartController::class, 'remove']);
+Route::get('/cart/{product}', [CartController::class, 'ProductCart']);
+Route::delete('/cart/{product}/destroyall', [CartController::class, 'destroyall']);
 
-Route::get('/cart', [ProductController::class, 'ProductCart']);
 ?>

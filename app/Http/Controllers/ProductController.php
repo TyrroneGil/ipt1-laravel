@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+
+    
    public function index(){
     return view('product.product2',[
         'products'=> Product::latest()->filter(request(['search']))->simplePaginate(3)
