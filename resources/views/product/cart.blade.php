@@ -1,7 +1,9 @@
 
 <x-layout>
 	<h1>Product Catalogue</h1>
-	
+	@php
+  $total=0
+  @endphp
 	
 	</div>
 	@if(session()->has('success'))
@@ -22,6 +24,7 @@
                   </div>
                   <hr class="my-4">
 				@foreach($products as $product)
+        @php $total += $product->unitPrice   @endphp
 				<div class="card my-4 card-registration  card-registration-2" style="border-radius: 15px;">
 				<div class="row mb-4 d-flex justify-content-between align-items-center">
                     <div class="col-md-2 col-lg-2 col-xl-2">
@@ -55,7 +58,8 @@
               </div>
 				<div class="col-lg-4 bg-grey">
                 <div class="p-5">
-                  <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                  <h3 class="fw-bold mb-5 mt-2 pt-1">Total: {{$total}}
+                  </h3>
                   <hr class="my-4">
 				  <form method="POST"action="/cart/{{$product->id}}/destroyall">
 						@csrf
