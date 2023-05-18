@@ -16,4 +16,6 @@ class Product extends Model
             ->orWhere('description','like','%'.$filters['search'].'%');
         }
     }
+
+   
 }

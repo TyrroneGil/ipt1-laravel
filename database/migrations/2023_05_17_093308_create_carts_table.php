@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('category');
             $table->text('image_url')->nullable();
             $table->text('description')->nullable();
+            $table->foreignId('user_id')->nullable();
         });
     }
 

@@ -24,13 +24,14 @@ class CartController extends Controller
             'image_url'=>'required'
            
         ]);
+        $formFields['user_id']=auth()->id();
        Cart::create($formFields);
        return redirect('/')->with('success','New product has been added to cart');
 }
 
 public function shoppingCart(){
     return view('product.cart',[
-        'products'=> Cart::all()
+        'products'=> auth()->user()->products()->paginate(5)
 			
        
     ]);
