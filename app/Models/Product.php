@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'unit', 'unitPrice', 'category','image_url','description'];
+    protected $fillable = ['name', 'unit', 'unitPrice', 'category','image_url','description','user_id'];
     public function scopeFilter($query,array $filters){
         if($filters['search'] ?? false){
             $query->where('name','like','%'.$filters['search'].'%')

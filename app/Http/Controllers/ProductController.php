@@ -21,7 +21,7 @@ class ProductController extends Controller
    }
    public function index2(){
     return view('product.products',[
-        'products'=> Product::latest()->filter(request(['search']))->simplePaginate(5)
+        'products'=> auth()->user()->products2()->simplePaginate(5)
 			
        
     ]);
@@ -48,6 +48,7 @@ class ProductController extends Controller
         'unitPrice'=>'required',
        
     ]);
+    $formFields['user_id']=auth()->id();
     if($request->hasFile('image_url')){
         $formFields['image_url']=$request->file('image_url')->store('images','public');
         }
@@ -58,29 +59,41 @@ class ProductController extends Controller
    
    }
    public function edit(Product $product){
-    return view('product.edit',[
-        'product'=>$product
-    ]);
+   
+    if(auth()->id()==$product->user_id){
+            return view('product.edit',[
+            'product'=>$product
+        ]);
+       }else{
+        abort(403,'Invalid Acton');
+       }
     
     
 }
 public function update(Product $product,Request $request){
-    $formFields = $request->validate([
-        'name'=>'required',
-        'unit'=>'required',
-        'category'=>'required',
-        'unitPrice'=>'required',
     
-       
-    ]);
-    
-      if($request->hasFile('image_url')){
-         File::delete('storage/'.$product->image_url);
-         $formFields['image_url']=$request->file('image_url')->store('images','public');
-        }else{
+    if(auth()->id()==$product->user_id){
+        $formFields = $request->validate([
+            'name'=>'required',
+            'unit'=>'required',
+            'category'=>'required',
+            'unitPrice'=>'required',
+        
+           
+        ]);
+        
+          if($request->hasFile('image_url')){
+             File::delete('storage/'.$product->image_url);
+             $formFields['image_url']=$request->file('image_url')->store('images','public');
+            }else{
+                
+            }
             
-        }
-    $product->update($formFields);
+        $product->update($formFields);
+       }else{
+        abort(403,'Invalid Acton');
+       }
+       
 
 			
     return redirect('/')->with('success','New product updated');
@@ -88,11 +101,17 @@ public function update(Product $product,Request $request){
    
    }
 public function destroy(Product $product){
-     if(File::exists('storage/'.$product->image_url)){
+     
+   if(auth()->id()==$product->user_id){
+    if(File::exists('storage/'.$product->image_url)){
     File::delete('storage/'.$product->image_url);
 
    }
-   $product->delete();
+    $product->delete();
+   }else{
+    abort(403,'Invalid Acton');
+   }
+   
     
    return redirect('/index2')->with('success','New product deleted');
    
