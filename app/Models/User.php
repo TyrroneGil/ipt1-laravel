@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'created_at',
+        'status'
     ];
 
     /**
@@ -47,4 +50,17 @@ class User extends Authenticatable
     public function products2(){
         return $this->hasMany(Product::class,'user_id');
     }
+    protected function getRoleAttribute($value){
+        $roles=['user','admin','deactivated'];
+
+        return $roles[$value];
+    }
+    public function scopeFilter($query){
+      
+       $query->whereIn('role',[0,2]);
+       
+            
+       
+
+}
 }

@@ -28,9 +28,6 @@
          <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/index2">Manage Product</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/usertable">Manage Users</a>
-        </li>
         
       </ul>
       @else

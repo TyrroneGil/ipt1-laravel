@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -33,6 +35,19 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+        });
+    }
+    protected function setHomeRouteByRole(){
+        Route::middleware('web')
+        ->namespace($this->namespace)
+        ->group(function(){
+            if(Auth::check()){
+                if(Auth::user()->role=='admin'){
+                    Route::get('/dashboard',[AdminController::class,'index'])->name('admin.admin');
+                }else{
+                    Route::get('/home',[UserController::class,'index'])->name('user.user');
+                }
+            }
         });
     }
 

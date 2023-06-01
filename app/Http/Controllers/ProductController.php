@@ -10,24 +10,30 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
-
+    public function indexusers(){
+        return view('user.product2',[
+            'products'=> Product::latest()->filter(request(['search']))->simplePaginate(3)
+                
+           
+        ]);
+    }
     
    public function index(){
-    return view('product.product2',[
+    return view('admin.product2',[
         'products'=> Product::latest()->filter(request(['search']))->simplePaginate(3)
 			
        
     ]);
    }
    public function index2(){
-    return view('product.products',[
+    return view('admin.products',[
         'products'=> auth()->user()->products2()->simplePaginate(5)
 			
        
     ]);
    }
    public function show(Product $product){
-    return view('product.product',[
+    return view('admin.product',[
         'product'=>$product
     ]);
 			
@@ -35,7 +41,7 @@ class ProductController extends Controller
    
    }
    public function create(){
-    return view('product.create');
+    return view('admin.create');
 			
        
    
@@ -61,7 +67,7 @@ class ProductController extends Controller
    public function edit(Product $product){
    
     if(auth()->id()==$product->user_id){
-            return view('product.edit',[
+            return view('admin.edit',[
             'product'=>$product
         ]);
        }else{

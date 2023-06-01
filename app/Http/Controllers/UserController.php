@@ -29,9 +29,11 @@ public function create(){
         
    $user= User::create($formFields);
 
-    auth()->login($user);
+     return view('users.login');
 			
-    return redirect('/')->with('success','Hello '.$user->name.' Welcome to my page');
+  
+   
+
        
    
    }
@@ -49,9 +51,58 @@ public function create(){
        
     ]);
     if(auth()->attempt($formFields)){
-        $request->session()->regenerate();
-         return redirect('/')->with('success','Hello Welcome to my page');
+        if(auth()->user()->role=='admin'){
+            return redirect()->route('admin.admin');
+        }elseif(auth()->user()->role=='user'){
+            return redirect()->route('user.user');
+        }else{
+            auth()->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken(); 
+         
+            abort('403','Sorry You are Deactivated');
+           
+        }
+        return back()->with('error','Incorrect Email or Password');       
+     }
+   
+}
+public function manageusers(){
+    return view('admin.manageusers',[
+        'users'=> User::latest()->filter()->simplePaginate(3)
+            
+       
+    ]);
+}
+public function deactivateUser(User $user,Request $request){
+ 
+    if($user->role=='user'||$user->role=='deactivated'){
+        $user->update([
+            'role'=>$request->role,
+            'status'=>$request->status,
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'created_at'=>$request->created_at,   
+        ]);
+        if($user->role=='deactivated'){
+        return redirect('/usertable')->with('success','The user has been Deactivated');
+
+    }else{
+        return redirect('/usertable')->with('success','The user has been Activated');
     }
-        return back()->withErrors(['email'=>'Invalid Credentials']);
-   } 
+    }
+        
+}
+public function deleteUser(User $user){
+ 
+    if($user->role=='user'){
+        $user->delete();
+        return redirect('/usertable')->with('success','The user has been deleted');
+    }else{
+        abort(403,'Invalid Action');
+    }
+   
+   
+
+}
 }

@@ -22,6 +22,7 @@ class="form-control @error('email') is-invalid @enderror"/>
     @enderror
 </div>
 </div>
+
 <div class="row mb-3">
 <label for="password" class="col-sm-2 col-form-label">Password:</label>
 <input type="text"  name="password" value="{{old('password')}}" name="password" 
