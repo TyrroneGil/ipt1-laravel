@@ -56,7 +56,7 @@
 </table>
 	@else
 	<div class="row">
-		<h3>No Products Found</h3>
+		<h3>No Users Found</h3>
 	</div>
 	@endunless
 </div>

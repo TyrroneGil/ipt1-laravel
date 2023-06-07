@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +23,10 @@ Route::middleware(['user'])->group(function(){
     Route::get('/userproducts', [ProductController::class, 'indexusers'])->name('user.user'); 
 Route::get('/cart', [CartController::class, 'shoppingCart'])->middleware('auth');
 Route::delete('/cart/{product}/remove',[CartController::class, 'remove'])->middleware('auth');
-Route::get('/cart/{product}', [CartController::class, 'ProductCart']);
+Route::get('/cart/{product}', [CartController::class, 'ProductCart'])->middleware('auth');
+Route::put('/updatequant/{product}',[CartController::class,'updateQuant'])->middleware('auth');
 Route::delete('/cart/{product}/destroyall', [CartController::class, 'destroyall']);
+Route::post('/checkout',[CartController::class,'checkOut']);
 });
 
 

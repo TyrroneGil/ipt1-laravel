@@ -2,6 +2,7 @@
 <x-layout2>
 	<h1>Product Catalogue</h1>
 	@php
+  $i=0
   $total=0
   @endphp
 	
@@ -24,7 +25,9 @@
                   </div>
                   <hr class="my-4">
 				@foreach($products as $product)
-        @php $total += $product->unitPrice   @endphp
+        @php $total += $product->unitPrice 
+        $i++
+        @endphp
 				<div class="card my-4 card-registration  card-registration-2" style="border-radius: 15px;">
 				<div class="row mb-4 d-flex justify-content-between align-items-center">
                     <div class="col-md-2 col-lg-2 col-xl-2">
@@ -32,6 +35,10 @@
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3">
                       <h6 class="text-muted">Name: {{$product->name}}</h6>
+                      <input type="text" value="{{$product->user_id}}" name="user_id">
+                      <input type="text" value="{{$product->name}}" name="product[$i][name]">
+                      <input type="text" value="{{$product->quantity}}" name="product[$i][quantity]"> 
+                      <input type="text" value="{{$product->unitPrice}}" name="product[$i][unitPrice]">
                       <h6 class="text-black mb-0">Category: {{$product->category}}</h6>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
@@ -46,7 +53,9 @@
                     </div>
 				</div>
 				</div>
-			
+        
+       
+
 				@endforeach
 				<hr class="my-4">
 
@@ -65,7 +74,7 @@
 						@csrf
 						@method('DELETE')
 						<button type="submit" class="btn btn-dark btn-block btn-lg"
-                    data-mdb-ripple-color="dark">Buy</button>
+                    data-mdb-ripple-color="dark">Check Out</button>
 					</form>
                   
 

@@ -26,10 +26,9 @@ public function create(){
        
     ]);
     $formFields['password']=bcrypt($formFields['password']);
-        
-   $user= User::create($formFields);
+        User::create($formFields);
 
-     return view('users.login');
+        return redirect('/login');
 			
   
    

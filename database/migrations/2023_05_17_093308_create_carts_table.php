@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('image_url')->nullable();
             $table->text('description')->nullable();
             $table->foreignId('user_id')->nullable();
+            $table->integer('quantity')->default(1);
         });
     }
 

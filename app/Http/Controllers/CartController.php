@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
@@ -21,7 +23,7 @@ class CartController extends Controller
             'unit'=>'required',
             'category'=>'required',
             'unitPrice'=>'required',
-            'image_url'=>'required'
+       
            
         ]);
         $formFields['user_id']=auth()->id();
@@ -37,10 +39,14 @@ public function shoppingCart(){
     ]);
    }
    public function remove(Cart $product){
-    
-  $product->delete();
+    if(auth()->id()==$product->user_id){
+         $product->delete();
    
-  return redirect('/cart')->with('success','Product Has been Removed');
+  
+    }else{
+        abort(403,'Invalid Acton');
+    }
+ return redirect('/cart')->with('success','Product Has been Removed');
   
 }
 public function destroyall()
@@ -48,4 +54,32 @@ public function destroyall()
     Cart::whereNotNull('id')->delete();
     return redirect('/cart')->with('success','The Product Has been Shipped');
 }
+public function updateQuant(Cart $product,Request $request)
+{
+    if(auth()->id()==$product->user_id){
+        $formFields = $request->validate([
+            'quantity'=>'required'
+        
+           
+        ]);
+        $product->update($formFields);
+        return redirect('/cart')->with('success','The product has been updated');
+
+   
+    }
+}
+public function checkOut(Request $request){
+        $formFields=$request->validate([
+            'address'=>'required',
+            'totalPrice'=>'required',
+            'totalOrder'=>'required',
+            'orderNum'=>'required',
+       
+         ]);
+        $formFields['user_id']=auth()->id();
+        Cart::where('user_id', auth()->id())->delete();
+        Order::create($formFields);
+        return redirect('/cart')->with('success','The product has been updated');
+        
+        }
 }

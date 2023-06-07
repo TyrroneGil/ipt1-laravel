@@ -2,7 +2,9 @@
 <x-layout2>
 	<h1>Product Catalogue</h1>
 	@php
-  $total=0
+  $total=0;
+  $totalorders=0;
+  $orderNum='OR'.rand(100,9999);
   @endphp
 	
 	</div>
@@ -24,7 +26,7 @@
                   </div>
                   <hr class="my-4">
 				@foreach($products as $product)
-        @php $total += $product->unitPrice   @endphp
+        @php $total += $product->unitPrice * $product->quantity   @endphp
 				<div class="card my-4 card-registration  card-registration-2" style="border-radius: 15px;">
 				<div class="row mb-4 d-flex justify-content-between align-items-center">
                     <div class="col-md-2 col-lg-2 col-xl-2">
@@ -41,12 +43,23 @@
 						<button class="btn btn-warning" type submit>Remove</i></button>
 					</form>
                     </div>
+                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+          <form action="/updatequant/{{$product['id']}}" method="post">
+          @csrf
+          @method('PUT')
+            	<input name="quantity" style="text-align:center" placeholder="{{$product->quantity}}"size="1" type="text" class="form-control">
+          </form>
+				
+                    </div>
 					<div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                       <h6 class="mb-0">{{$product->unitPrice}}/{{$product->unit}}</h6>
                     </div>
 				</div>
 				</div>
-			
+			@php
+          $totalorders++;
+      @endphp
+     
 				@endforeach
 				<hr class="my-4">
 
@@ -57,16 +70,27 @@
                 </div>
               </div>
 				<div class="col-lg-4 bg-grey">
+        <div class="p-5">
+                  <h3 class="fw-bold mb-5 mt-2 pt-1">Informations</h3>
+                  <hr class="my-4">
+                <form action="/checkout"method="post">
+                  @csrf
+                <label  class="fw-bold">Complete Address</label>
+                <input name="address" class="form-control" type="text"/>
+              <input  type="hidden" name="totalPrice"value="{{$total}}"/>
+                <input name="totalOrder" type="hidden" value="{{$totalorders}}"/>
+             
+                <input name="orderNum"type="hidden" value="{{$orderNum}}"/>
+                  <button type="submit" class="btn btn-dark ">Check Out</button>
+					</form>
                 <div class="p-5">
                   <h3 class="fw-bold mb-5 mt-2 pt-1">Total: {{$total}}
                   </h3>
                   <hr class="my-4">
-				  <form method="POST"action="/cart/{{$product->id}}/destroyall">
-						@csrf
-						@method('DELETE')
-						<button type="submit" class="btn btn-dark btn-block btn-lg"
-                    data-mdb-ripple-color="dark">Buy</button>
-					</form>
+                  
+				  
+					
+						
                   
 
                   
