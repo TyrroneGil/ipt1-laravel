@@ -16,9 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->string('orderNum')->nullable();
             $table->string('address');
-            $table->integer('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->decimal('totalPrice')->nullable();
-            $table->decimal('totalOrder')->nullable();
+            $table->Integer('totalOrder')->nullable();
         });
     }
 
